@@ -5,8 +5,7 @@ import LoginButton from '../components/LoginButton.astro'
 
 <Layout title="Login">
 	
-	<section class="container">
-		<h2>Login</h2>
+	<section class="flex flex-col items-center px-4 mx-auto max-w-xl lg:py-16 lg:px-6 container">
 		<form id="loginForm" action="/" method="POST">
 		  <div class="form-group">
 			<label for="username">Usuario</label>
@@ -17,8 +16,11 @@ import LoginButton from '../components/LoginButton.astro'
 			<input type="password" id="password" name="password" placeholder="*******" required>
 		  </div>
 		</form>
-		<LoginButton>Login</LoginButton>
-				
+		<div class="p-7">
+			<LoginButton>Login</LoginButton>
+			<LoginButton>Register</LoginButton>
+		</div>
+		
 	</section>
 	  
 </Layout>
