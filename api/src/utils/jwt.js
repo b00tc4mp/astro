@@ -6,8 +6,6 @@ export const generateToken = (user) => {
     return token   
 }
 
-console.log(generateToken({"_id": "660dca762f2f4ab1e269beec","nombre":"Santi","apellido":"user","email":"santi@sordi.com","password":"$2b$15$065EP6QDijaCwmNpVamLZ.YhxKbKPI8pt8W3XO2j634hHAJ7GoivK","rol":"user","__v":{"$numberInt":"0"}}))
-
 export const authToken = (req, res, next) => {
     const authHeader = req.headers.Authorization
     if(!authHeader) {

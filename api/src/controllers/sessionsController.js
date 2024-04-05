@@ -39,11 +39,9 @@ const getLogout = async (req, res) => {
           res.status(200).send({ resultado: 'Session logout' });
           //   res.redirect("/static/signin");
       } else {
-          console.log(req.session.user);
           res.status(400).send({ error: 'No session register' });
       }
   } catch (error) {
-      console.error('Error session:', error);
       res.status(500).send({ error: 'Server internal error logout' });
   };
 };

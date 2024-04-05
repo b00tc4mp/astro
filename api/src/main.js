@@ -9,10 +9,23 @@ import router from './routes/index.routes.js'
 import mongoConnect from './dataBase.js';
 import cors from 'cors'
 
+const whitelist = ['http://localhost:4321']
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if(whitelist.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback( new Error ('Not allowed by CORS'))
+        }
+    }
+}
+
 const app = express()
-const port = 4000
+const port = process.env.PORT
 
 //Middlewares
+app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended:true }))
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET))
@@ -40,6 +53,7 @@ mongoConnect()
 
 //Server
 app.listen(port, ()=>{
-    console.log(`server on port ${port}`)
+    // eslint-disable-next-line no-console
+    console.log(`Server on port ${port}`)
 })
 
