@@ -18,7 +18,7 @@ const postSessions = async (req, res) => {
 //controllador de registro
 const registerPost = async (req,res) => {
   try {
-      if (!req.user) {
+      if (req.user) {
           return res.status(400).send({mensaje:`User already exists`});
       }
       return res.status(200).send({mensaje: "User Created"});

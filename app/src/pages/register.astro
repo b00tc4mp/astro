@@ -1,1 +1,82 @@
-<h1>register</h1>
+---
+import Layout from "../layouts/Layout.astro";
+import LoginButton from "../components/LoginButton.astro";
+---
+
+<Layout title="Register">
+  <h1 class="flex justify-center pb-2">Registro</h1>
+  <form class="flex flex-col justify-center items-center gap-1" method="POST" id="registerForm">
+    <label>
+      Nombre:
+      <input id="nombre" type="text" name="nombre" required />
+    </label>
+    <label>
+        Apellido:
+        <input id="apellido" type="text" name="apellido" required />
+      </label>
+    <label>
+      Correo electrónico:
+      <input id="email" type="email" name="email" required />
+    </label>
+    <label class="pb-8">
+      Contraseña:
+      <input id="password" type="password" name="password" required minlength="6" />
+    </label>
+    <LoginButton>Registro</LoginButton>
+    
+  </form>
+
+  <script>
+// registerForm.js
+
+document.addEventListener('DOMContentLoaded', function () {
+    const registerForm = document.getElementById('registerForm');
+
+    registerForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Evita el envío del formulario por defecto
+
+        // Obtén los valores de los campos del formulario
+        const nombreInput = document.getElementById('nombre')as HTMLInputElement
+        const apellidoInput = document.getElementById('apellido')as HTMLInputElement
+        const emailInput = document.getElementById('email')as HTMLInputElement
+        const passwordInput = document.getElementById('password')as HTMLInputElement
+
+        const nombre = nombreInput.value
+        const apellido = apellidoInput.value
+        const email = emailInput.value
+        const password = passwordInput.value
+
+        // Crea un objeto con los datos del formulario
+        const formData = {
+            nombre: nombre,
+            apellido: apellido,
+            email: email,
+            password: password
+        };
+
+        // Envía los datos del formulario al endpoint
+        fetch('http://localhost:4000/sessions/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Manejar la respuesta si es exitosa
+                alert("User created!")
+                window.location.href = 'http://localhost:4321/'
+            } else {
+                // Manejar la respuesta si hay errores
+                console.error('Error en el registro:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Error en el registro:', error);
+        });
+    });
+});
+
+  </script>
+</Layout>

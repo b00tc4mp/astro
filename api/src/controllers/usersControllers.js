@@ -25,7 +25,6 @@ const updateUser =
         const { nombre, apellido, email, password } = req.body;
         try { 
     
-            console.log("ID del usuario:", uid);
             const existUser = await userModel.exists({_id: uid })      
             if (!existUser) {
                 return res.status(400).send("User not found");

@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LoginButton from '../components/LoginButton.astro'
+
+
+---
+
+<Layout title="Login">
+	
+		<form class="flex flex-col items-center px-4 mx-auto max-w-xl lg:py-16 lg:px-6 container" id="loginForm" action="/" method="POST">
+			<label for="email">Email:
+				<input type="email" id="email" name="email" placeholder="santi@gmail.com" required>	
+			</label>
+			<label class="pb-5" for="password">Password:
+				<input type="password" id="password" name="password" placeholder="*******" required>
+			</label >
+			<LoginButton>Login</LoginButton>
+			<p>No tienes una cuenta <a href="http://localhost:4321/register">Registrate aca!</a></p>
+		</form>
+
+		<script>
+			document.getElementById("loginForm").addEventListener("submit", async (e)=> {
+			e.preventDefault()
+
+			const emailInput = document.getElementById('email') as HTMLInputElement
+			const passwordInput = document.getElementById("password") as HTMLInputElement
+
+			const email = emailInput.value	
+			const password = passwordInput.value
+		
+			try {
+				const response = await fetch ("http://localhost:4000/sessions/login", {
+					method: 'POST', 
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({ email, password })
+				})
+
+				if(response.ok) {
+					const data = await response.json()
+					const token = data.token
+					console.log("Authentication successful! Token:", token)
+					window.location.href = 'http://localhost:4321/users'
+				} else {
+					console.error ("Authentication failed. Check your credentials.")
+				}
+			} catch (error) {
+				console.error("An error occurred:", error)
+			}
+		})
+		</script>
+		
+</Layout>

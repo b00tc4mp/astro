@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro"
+
+
+---
+<Layout title="Users List">
+    <h1>User</h1>
+
+    <div id="usuarios">
+        
+    </div>
+
+    <script>
+        fetch('http://localhost:4000/user')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error al obtener la lista de usuarios');
+    }
+    return response.json();
+  })
+  .then(users => {
+    // Llamar a una función para mostrar los usuarios en el HTML
+    mostrarUsuarios(users);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+  function mostrarUsuarios(users) {
+  const usuariosDiv = document.getElementById('usuarios');
+  usuariosDiv.innerHTML = '';
+
+  // Iterar sobre la lista de usuarios y crear elementos para mostrarlos en el HTML
+  users.forEach(user => {
+    const usuarioElemento = document.createElement('div');
+    usuarioElemento.innerHTML = `
+      <p><strong>Nombre:</strong> ${user.nombre}</p>
+      <p><strong>Apellido:</strong> ${user.apellido}</p>
+      <p><strong>Email:</strong> ${user.email}</p>
+      <hr>
+    `;
+    usuariosDiv.appendChild(usuarioElemento);
+  });
+}
+    </script>
+</Layout>
