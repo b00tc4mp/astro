@@ -3,7 +3,6 @@ import passport from 'passport'
 import { userModel } from '../models/users.model.js'
 import { createHash, validatePassword } from '../utils/bcrypt.js'
 import jwt from 'passport-jwt'
-import { application } from 'express'
 
 const LocalStrategy = local.Strategy
 const JwtStrategy = jwt.Strategy
@@ -36,16 +35,17 @@ const initializePassport = ()=>{
         try {
             const user = await userModel.findOne({email: username})
             if(user){
-                return done(null, false)
+                return done(null, false, { message: 'User already exists' })
             }
             const passwordHash = createHash(password)
-            const userCreated = await userModel.create( {
+            const newUser = await userModel.create( {
                 nombre: nombre,
                 apellido: apellido,
                 email: email,
                 password: passwordHash
             })
-            return done(null, userCreated)
+            
+            return done(null, newUser)
 
         } catch (error) {
             return done(error)

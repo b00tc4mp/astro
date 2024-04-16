@@ -5,7 +5,6 @@ const postSessions = async (req, res) => {
         if (!req.user) {
             res.status(401).send({mensaje: "Invalidate user"});
         } 
-        
         const token = generateToken(req.user); 
         res.cookie('jwtCookie', token, {
           maxAge: 43200000 
@@ -18,10 +17,11 @@ const postSessions = async (req, res) => {
 //controllador de registro
 const registerPost = async (req,res) => {
   try {
-      if (req.user) {
-          return res.status(400).send({mensaje:`User already exists`});
+      if (!req.user) {
+          return res.status(409).send({mensaje:`User already exists`});
       }
-      return res.status(200).send({mensaje: "User Created"});
+            return res.status(200).send({mensaje: "User Created"});
+        
   } catch (error) {
       res.status(500).send({mensaje: `Create user error ${error}`});
   };
