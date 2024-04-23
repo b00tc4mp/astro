@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import LoginButton from "../components/LoginButton.astro";
+import Card from "../components/CardUser.astro"
+import CardUser from "../components/CardUser.astro";
 
 const res = await fetch('http://localhost:4000/user')
   .then(response => {
@@ -9,10 +11,7 @@ const res = await fetch('http://localhost:4000/user')
     }
     return response.json();
   })
-//   .then(users => {
-//     // Llamar a una función para mostrar los usuarios en el HTML
-//     mostrarUsuarios(users);
-//   })
+
   .catch(error => {
     console.error('Error:', error);
   });
@@ -26,7 +25,7 @@ const res = await fetch('http://localhost:4000/user')
     </a>
     <div class="flex flex-col content-center text-center"  id="usuarios">
         {res.map( users=>(
-            <p>{users.nombre}</p>
+            <CardUser nombre={users.nombre} email={users.email}/>
         )
         )}
     </div>

@@ -9,7 +9,7 @@ import router from './routes/index.routes.js'
 import mongoConnect from './dataBase.js';
 import cors from 'cors'
 
-const whitelist = ['http://localhost:4321']
+const whitelist = ['http://localhost:4321', 'http://localhost:4321/sessions/register']
 
 const corsOptions = {
     origin: (origin, callback) => {

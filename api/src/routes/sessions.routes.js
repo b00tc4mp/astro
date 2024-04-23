@@ -9,6 +9,7 @@ sessionsRouter.get('/current', passportError('jwt'), authorization('user'), sess
 
 sessionsRouter.post('/login', passport.authenticate('login'), sessionController.postSessions)
 
+debugger
 sessionsRouter.post('/register', passport.authenticate('register'), sessionController.registerPost )
 
 sessionsRouter.get('/logout', sessionController.getLogout )
