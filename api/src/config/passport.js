@@ -45,7 +45,6 @@ const initializePassport = ()=>{
                 email: email,
                 password: passwordHash
             })
-            console.log(newUser)
             return done(null, newUser)
 
         } catch (error) {
@@ -56,15 +55,15 @@ const initializePassport = ()=>{
     
     passport.use('login', new LocalStrategy({usernameField: 'email'}, async (username, password, done) => {    
         try {
-            const user = await userModel.findOne ( { email: username})        
+            const user = await userModel.findOne ( { email: username})
             if(!user) {
+           
                 return done(null, false)
             }          
             if(validatePassword(password, user.password)) {
                 return done(null, user) // user y contraseña validos
-            }
-            return done(null, false) //contraseña no valida
-            
+            }       
+            return done(null, false) //contraseña no valida          
         } catch (error) {
             return done(error)
         }

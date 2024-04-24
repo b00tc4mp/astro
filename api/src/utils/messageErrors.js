@@ -7,7 +7,7 @@ export const passportError = (strategy) => {
                 return next(error)
             }
             if(!user) {
-                return res.status(401).send( {error: info.message ? info.message : info.toString()} )
+                return res.status(401).send( {error: info.message ? info.message : info.toString()} )       
             }
             req.user = user
             next()

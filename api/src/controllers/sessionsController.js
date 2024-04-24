@@ -20,8 +20,7 @@ const registerPost = async (req,res) => {
       if (!req.user) {
           return res.status(409).send({mensaje:`User already exists`});
       }
-            return res.status(200).send({mensaje: "User Created"});
-        
+            return res.status(200).send({mensaje: "User Created"});       
   } catch (error) {
       res.status(500).send({mensaje: `Create user error ${error}`});
   };
