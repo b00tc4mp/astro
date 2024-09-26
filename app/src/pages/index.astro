@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LoginButton from "../components/LoginButton.astro";
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const email = data.get("email");
+    const password = data.get("password");
+
+    console.log(data)
+
+		const response = await fetch ("http://localhost:4000/sessions/login", {
+					method: 'POST', 
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify( {email, password})
+				})
+				console.log(response)
+				if(response.ok) {
+					const data = await response.json()
+					const token = data.token
+					console.log("Authentication successful! Token:", token)
+					return Astro.redirect ('http://localhost:4321/users')	
+        } else {
+					console.error ("Authentication failed. Check your credentials.")
+				}
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+<Layout title="Login">
+  <form
+    class="flex flex-col items-center px-4 mx-auto max-w-xl lg:py-16 lg:px-6 container"
+    id="loginForm"
+    action="/"
+    method="POST"
+  >
+    <label class="pb-4" for="email"
+      >Email:
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="santi@gmail.com"
+        required
+      />
+    </label>
+    <label class="pb-5" for="password"
+      >Password:
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="*******"
+        required
+      />
+    </label>
+    <LoginButton>Login</LoginButton>
+    <p class="mt-4">
+      No tienes una cuenta?<a href="http://localhost:4321/register"
+        > Registrate aca!</a>
+    </p>
+  </form>
+</Layout>
